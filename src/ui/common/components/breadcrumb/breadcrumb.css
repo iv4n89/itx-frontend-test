@@ -1,0 +1,21 @@
+.header__breadcrumbs {
+  display: flex;
+  align-items: center;
+}
+
+.header__breadcrumbs--hidden {
+  visibility: hidden;
+}
+
+.header__breadcrumb_link {
+  color: #495057;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+  text-decoration: none;
+}
+
+.header__breadcrumb_link:hover {
+  color: #007bff;
+  text-decoration: underline;
+}
