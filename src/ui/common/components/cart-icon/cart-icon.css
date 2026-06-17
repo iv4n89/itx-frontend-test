@@ -1,0 +1,28 @@
+.header__cart_container {
+  position: relative;
+  display: inline-block;
+}
+
+.header__cart_icon {
+  height: 40px;
+  width: 40px;
+  transform: rotateY(180deg);
+}
+
+.header__cart_number_items {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: #dc3545;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  min-width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
