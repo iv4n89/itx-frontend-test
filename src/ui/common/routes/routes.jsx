@@ -1,4 +1,6 @@
 import { createBrowserRouter } from "react-router";
+import { Layout } from "../components/layout/layout";
+import { HomePage } from "@/ui/itx-store/views/home";
 
 /**
  * @type {import('react-router').RouteObject[]}
@@ -6,11 +8,11 @@ import { createBrowserRouter } from "react-router";
 const routes = [
   {
     path: "/",
-    Component: <></>,
+    Component: Layout,
     children: [
       {
         index: true,
-        element: <></>,
+        element: <HomePage />,
       },
     ],
   },

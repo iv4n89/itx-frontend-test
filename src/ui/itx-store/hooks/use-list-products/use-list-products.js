@@ -6,7 +6,7 @@ const queryKey = QUERIES.LIST_PRODUCT;
 
 export const useListProducts = () => {
   const query = useQuery({
-    queryKey,
+    queryKey: [queryKey],
     queryFn: getProductList,
     staleTime: 1000 * 60 * 60, // 1 hour
   });
