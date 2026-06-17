@@ -1,0 +1,58 @@
+.item__card {
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  height: 100%;
+}
+
+.item__card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  border-color: #d0d0d0;
+}
+
+.item__image_container {
+  width: 100%;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.item__content {
+  padding: 1rem 1.25rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.item__brand {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #495057;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.item__model {
+  font-size: 1rem;
+  color: #212529;
+  margin: 0;
+  font-weight: 400;
+}
+
+.item__price {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #007bff;
+  margin: 0.5rem 0 0 0;
+}
