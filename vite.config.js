@@ -11,4 +11,13 @@ export default defineConfig({
       "@/ui": path.resolve(__dirname, "src/ui"),
     },
   },
+  test: {
+    environment: "jsdom",
+    globals: true,
+    setupFiles: "./src/test/setup.js",
+    alias: {
+      "@/core": path.resolve(__dirname, "src/core"),
+      "@/ui": path.resolve(__dirname, "src/ui"),
+    },
+  },
 });
