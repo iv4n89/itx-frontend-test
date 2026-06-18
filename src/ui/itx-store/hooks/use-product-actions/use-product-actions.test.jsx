@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { renderHook, act, waitFor } from "@testing-library/react";
+import { renderHook, act } from "@testing-library/react";
 import { CartProvider } from "@/ui/common/context/cart-context/cart-context-provider";
 import { addToCart } from "@/core/itx-store/itx-store-service";
 import { useProductActions } from "./use-product-actions";
@@ -11,13 +11,19 @@ vi.mock("@/core/itx-store/itx-store-service", () => ({
 const wrapper = ({ children }) => <CartProvider>{children}</CartProvider>;
 
 const multiOptions = {
-  storage: ["128GB", "256GB"],
-  colors: ["black", "white"],
+  storages: [
+    { code: 1, name: "128GB" },
+    { code: 2, name: "256GB" },
+  ],
+  colors: [
+    { code: 3, name: "black" },
+    { code: 4, name: "white" },
+  ],
 };
 
 const singleOptions = {
-  storage: ["128GB"],
-  colors: ["black"],
+  storages: [{ code: 1, name: "128GB" }],
+  colors: [{ code: 2, name: "black" }],
 };
 
 describe("useProductActions", () => {
@@ -42,7 +48,7 @@ describe("useProductActions", () => {
     // when ~ (initial state)
 
     // then
-    expect(result.current.selectedStorage).toBe("128GB");
+    expect(result.current.selectedStorage).toBe(1);
   });
 
   it("auto-selects color when only one option is available", () => {
@@ -52,7 +58,7 @@ describe("useProductActions", () => {
     // when ~ (initial state)
 
     // then
-    expect(result.current.selectedColor).toBe("black");
+    expect(result.current.selectedColor).toBe(2);
   });
 
   it("handleStorageSelect updates the selected storage", () => {
@@ -60,10 +66,10 @@ describe("useProductActions", () => {
     const { result } = renderHook(() => useProductActions("1", multiOptions), { wrapper });
 
     // when
-    act(() => result.current.handleStorageSelect("256GB"));
+    act(() => result.current.handleStorageSelect(2));
 
     // then
-    expect(result.current.selectedStorage).toBe("256GB");
+    expect(result.current.selectedStorage).toBe(2);
   });
 
   it("handleColorSet updates the selected color", () => {
@@ -71,10 +77,10 @@ describe("useProductActions", () => {
     const { result } = renderHook(() => useProductActions("1", multiOptions), { wrapper });
 
     // when
-    act(() => result.current.handleColorSet("white"));
+    act(() => result.current.handleColorSet({ code: 4, name: "white" }));
 
     // then
-    expect(result.current.selectedColor).toBe("white");
+    expect(result.current.selectedColor).toEqual({ code: 4, name: "white" });
   });
 
   it("isAddToCartDisabled is true when no storage is selected", () => {
@@ -98,7 +104,7 @@ describe("useProductActions", () => {
   });
 
   it("handleAddToCart calls the service with the selected options", async () => {
-    // given ~ both options auto-selected, service resolves
+    // given ~ both auto-selected via single options, service resolves
     addToCart.mockResolvedValue({ count: 1 });
     const { result } = renderHook(() => useProductActions("1", singleOptions), { wrapper });
 
@@ -108,8 +114,8 @@ describe("useProductActions", () => {
     // then
     expect(addToCart).toHaveBeenCalledWith({
       id: "1",
-      colorCode: "black",
-      storageCode: "128GB",
+      colorCode: 2,
+      storageCode: 1,
     });
   });
 
@@ -137,19 +143,6 @@ describe("useProductActions", () => {
     // then
     await act(() => { resolve({ count: 1 }); });
     expect(result.current.isFetching).toBe(false);
-  });
-
-  it("adds to cart context when the service responds with count 1", async () => {
-    // given ~ service confirms item was added
-    addToCart.mockResolvedValue({ count: 1 });
-    const { result } = renderHook(() => useProductActions("1", singleOptions), { wrapper });
-
-    // when
-    await act(() => result.current.handleAddToCart());
-
-    // then ~ itemCount not directly accessible here; service was called (covered above)
-    // and no error thrown confirms context addToCart ran without issue
-    expect(addToCart).toHaveBeenCalledOnce();
   });
 
   it("does not add to cart context when the service responds with count other than 1", async () => {
