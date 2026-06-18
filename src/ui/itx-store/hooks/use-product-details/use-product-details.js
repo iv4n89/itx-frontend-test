@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 const queryKey = QUERIES.PRODUCT_DETAILS;
 
 export const useProductDetails = (productId) => {
-  console.log(productId);
   const query = useQuery({
     queryKey: [queryKey, productId],
     queryFn: () => getProductDetails(productId),

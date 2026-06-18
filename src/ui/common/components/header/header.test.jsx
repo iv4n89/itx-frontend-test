@@ -1,13 +1,16 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router";
+import { CartProvider } from "../../context/cart-context/cart-context-provider";
 import { Header } from "./header";
 
 const renderHeader = () =>
   render(
-    <MemoryRouter initialEntries={["/"]}>
-      <Header />
-    </MemoryRouter>,
+    <CartProvider>
+      <MemoryRouter initialEntries={["/"]}>
+        <Header />
+      </MemoryRouter>
+    </CartProvider>,
   );
 
 describe("Header", () => {

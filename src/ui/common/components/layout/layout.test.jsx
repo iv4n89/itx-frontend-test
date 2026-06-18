@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { createMemoryRouter, RouterProvider } from "react-router";
+import { CartProvider } from "../../context/cart-context/cart-context-provider";
 import { Layout } from "./layout";
 
 const renderLayout = () => {
@@ -11,7 +12,11 @@ const renderLayout = () => {
       children: [{ index: true, element: <div>Page content</div> }],
     },
   ]);
-  return render(<RouterProvider router={router} />);
+  return render(
+    <CartProvider>
+      <RouterProvider router={router} />
+    </CartProvider>,
+  );
 };
 
 describe("Layout", () => {

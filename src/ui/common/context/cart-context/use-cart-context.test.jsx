@@ -21,4 +21,17 @@ describe("useCart", () => {
     // then
     expect(call).not.toThrow();
   });
+
+  it("returns cart, itemCount and addToCart when inside a CartProvider", () => {
+    // given ~ CartProvider wraps the hook
+    const wrapper = ({ children }) => <CartProvider>{children}</CartProvider>;
+    // when
+    const { result } = renderHook(() => useCart(), { wrapper });
+    // then
+    expect(result.current).toMatchObject({
+      cart: expect.any(Array),
+      itemCount: expect.any(Number),
+      addToCart: expect.any(Function),
+    });
+  });
 });

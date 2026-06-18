@@ -1,4 +1,5 @@
 import { ProductSpecs } from "../product-specs/product-specs";
+import './product.css';
 
 export const Product = ({ data }) => {
   return (

@@ -1,5 +1,6 @@
 import { Spinner } from "@/ui/common/components/spinner/spinner";
 import { useProductActions } from "../../hooks/use-product-actions/use-product-actions";
+import "./actions.css";
 
 export const Actions = ({ productId, options }) => {
   const {
@@ -41,15 +42,15 @@ export const Actions = ({ productId, options }) => {
           {colors.map((color) => (
             <button
               key={color}
-              className={`product_actions__color ${
+              className={`product_actions__option ${
                 selectedColor === color
-                  ? "product_actions__color--selected"
+                  ? "product_actions__option--selected"
                   : ""
               }`}
-              style={{ backgroundColor: color.toLowerCase() }}
               onClick={() => handleColorSet(color)}
-              title={color}
-            />
+            >
+              {color}
+            </button>
           ))}
         </div>
       </div>

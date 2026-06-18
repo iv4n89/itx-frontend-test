@@ -15,7 +15,7 @@ export const useProductActions = (productId, options) => {
   });
 
   const [selectedColor, setSelectedColor] = React.useState(() => {
-    if (options?.colors?.lenght === 1) {
+    if (options?.colors?.length === 1) {
       return options.colors[0];
     }
   });
