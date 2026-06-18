@@ -14,6 +14,13 @@ const routes = [
         index: true,
         element: <HomePage />,
       },
+      {
+        path: "product/:id",
+        lazy: async () => {
+          const { DetailsPage } = await import("@/ui/itx-store/views/details");
+          return { Component: DetailsPage };
+        },
+      },
     ],
   },
 ];

@@ -16,9 +16,7 @@ describe("BreadCrumb", () => {
     // when
     const { container } = renderAt("/");
     // then
-    expect(container.querySelector("nav")).toHaveClass(
-      "header__breadcrumbs--hidden",
-    );
+    expect(container.querySelector("nav")).toHaveClass("header__breadcrumbs--hidden");
   });
 
   it("is visible when the path is a product page", () => {
@@ -26,32 +24,49 @@ describe("BreadCrumb", () => {
     // when
     const { container } = renderAt("/product/123");
     // then
-    expect(container.querySelector("nav")).not.toHaveClass(
-      "header__breadcrumbs--hidden",
-    );
+    expect(container.querySelector("nav")).not.toHaveClass("header__breadcrumbs--hidden");
   });
 
-  it("shows 'Inicio' text when the path is /", () => {
+  it("always shows an 'Inicio' link", () => {
     // given ~ the user is on the home page
     // when
     renderAt("/");
     // then
-    expect(screen.getByText(/Inicio/)).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Inicio" })).toBeInTheDocument();
   });
 
-  it("shows 'Detalle de producto' text when the path starts with /product/", () => {
+  it("shows a 'Detalles producto' link on a product page", () => {
     // given ~ the user is on a product detail page
     // when
     renderAt("/product/abc123");
     // then
-    expect(screen.getByText(/Detalle de producto/)).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Detalles producto" })).toBeInTheDocument();
   });
 
-  it("renders a link to the home page", () => {
-    // given ~ any path
+  it("the 'Inicio' link always points to /", () => {
+    // given ~ the user is on a product detail page
     // when
-    renderAt("/product/123");
+    renderAt("/product/abc123");
     // then
-    expect(screen.getByRole("link")).toHaveAttribute("href", "/");
+    expect(screen.getByRole("link", { name: "Inicio" })).toHaveAttribute("href", "/");
+  });
+
+  it("the 'Detalles producto' link points to the current product", () => {
+    // given ~ the user is on a specific product page
+    // when
+    renderAt("/product/abc123");
+    // then
+    expect(screen.getByRole("link", { name: "Detalles producto" })).toHaveAttribute(
+      "href",
+      "/product/abc123",
+    );
+  });
+
+  it("shows a separator between breadcrumb items on a product page", () => {
+    // given ~ the user is on a product detail page
+    // when
+    renderAt("/product/abc123");
+    // then
+    expect(screen.getByText(">")).toBeInTheDocument();
   });
 });
