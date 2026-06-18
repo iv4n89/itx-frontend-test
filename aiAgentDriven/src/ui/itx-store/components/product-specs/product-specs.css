@@ -1,0 +1,19 @@
+.product-specs {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.product-specs__item {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.product-specs__label {
+  font-weight: 600;
+  min-width: 140px;
+  color: #555;
+}

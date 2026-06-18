@@ -1,0 +1,11 @@
+.skeleton {
+  background: linear-gradient(90deg, #e5e5e5 25%, #f0f0f0 50%, #e5e5e5 75%);
+  background-size: 200% 100%;
+  animation: skeleton-pulse 1.5s infinite;
+  border-radius: 4px;
+}
+
+@keyframes skeleton-pulse {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

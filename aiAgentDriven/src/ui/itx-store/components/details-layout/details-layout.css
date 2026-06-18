@@ -1,0 +1,34 @@
+.details-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.details-layout__back {
+  font-size: 0.875rem;
+  color: #555;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.details-layout__back::before {
+  content: "←";
+}
+
+.details-layout__back:hover {
+  color: #1a1a1a;
+}
+
+.details-layout__content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (max-width: 640px) {
+  .details-layout__content {
+    grid-template-columns: 1fr;
+  }
+}
