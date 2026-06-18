@@ -4,19 +4,19 @@ import React from "react";
 
 /**
  * @param {string} productId
- * @param {{storage: string[], colors: string[]}} options
+ * @param {{storages: {code: number, name: string}[], colors: {code: number, name: string}[]}} options
  */
 export const useProductActions = (productId, options) => {
   const [selectedStorage, setSelectedStorage] = React.useState(() => {
-    if (options?.storage?.length === 1) {
-      return options.storage[0];
+    if (options?.storages?.length === 1) {
+      return options.storages[0].code;
     }
     return null;
   });
 
   const [selectedColor, setSelectedColor] = React.useState(() => {
     if (options?.colors?.length === 1) {
-      return options.colors[0];
+      return options.colors[0].code;
     }
   });
 
@@ -24,19 +24,19 @@ export const useProductActions = (productId, options) => {
   const { addToCart: addToContextCart } = useCart();
 
   const storages = React.useMemo(
-    () => options?.storage || [],
-    [options?.storage],
+    () => options?.storages || [],
+    [options?.storages],
   );
   const colors = React.useMemo(() => options?.colors || [], [options?.colors]);
 
   const isAddToCartDisabled = !selectedStorage || !selectedColor || isFetching;
 
-  const handleStorageSelect = (storage) => {
-    setSelectedStorage(storage);
+  const handleStorageSelect = (storageCode) => {
+    setSelectedStorage(storageCode);
   };
 
-  const handleColorSet = (color) => {
-    setSelectedColor(color);
+  const handleColorSet = (colorId) => {
+    setSelectedColor(colorId);
   };
 
   const handleAddToCart = async () => {

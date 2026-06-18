@@ -36,13 +36,7 @@ export const DetailsLayout = ({ product, isLoading }) => {
       </div>
       <div className="details_layout__content">
         <Product data={product} />
-        <Actions
-          productId={product.id}
-          options={{
-            storage: product.internalMemory,
-            colors: product.colors,
-          }}
-        />
+        <Actions productId={product.id} options={product.options} />
       </div>
     </div>
   );

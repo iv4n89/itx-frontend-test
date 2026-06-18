@@ -15,7 +15,7 @@ export const ItemsGrid = ({ items, isLoading }) => {
 
   return (
     <div className="items_grid">
-      {items?.map((item) => (
+      {items.map((item) => (
         <Item
           key={item.id}
           id={item.id}

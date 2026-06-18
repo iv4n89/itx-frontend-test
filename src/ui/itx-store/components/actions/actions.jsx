@@ -22,15 +22,16 @@ export const Actions = ({ productId, options }) => {
         <div className="product_actions__options">
           {storages.map((storage) => (
             <button
-              key={storage}
+              key={storage.code}
               className={`product_actions__option ${
-                selectedStorage === storage
+                selectedStorage === storage.code
                   ? "product_actions__option--selected"
                   : ""
               }`}
-              onClick={() => handleStorageSelect(storage)}
+              onClick={() => handleStorageSelect(storage.code)}
+              title={storage.name}
             >
-              {storage}
+              {storage.name}
             </button>
           ))}
         </div>
@@ -41,15 +42,16 @@ export const Actions = ({ productId, options }) => {
         <div className="product_actions__colors">
           {colors.map((color) => (
             <button
-              key={color}
+              key={color.code}
               className={`product_actions__option ${
-                selectedColor === color
+                selectedColor === color.code
                   ? "product_actions__option--selected"
                   : ""
               }`}
               onClick={() => handleColorSet(color)}
+              title={color.name}
             >
-              {color}
+              {color.name}
             </button>
           ))}
         </div>
