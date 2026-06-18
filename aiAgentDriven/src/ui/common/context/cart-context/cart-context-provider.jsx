@@ -13,7 +13,7 @@ export function CartProvider({ children }) {
 
   async function addToCart(id, colorCode, storageCode) {
     const { count } = await addToCartApi({ id, colorCode, storageCode });
-    setCartCount(count);
+    if (count) setCartCount((prev) => prev + 1);
   }
 
   return (

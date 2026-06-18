@@ -43,6 +43,11 @@
   align-self: flex-start;
 }
 
-.actions__add:hover {
+.actions__add:hover:not(:disabled) {
   opacity: 0.85;
+}
+
+.actions__add:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }

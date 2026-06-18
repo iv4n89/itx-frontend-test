@@ -108,4 +108,46 @@ describe("Actions", () => {
     // then
     expect(onAddToCart).toHaveBeenCalled();
   });
+
+  it("disables the add button when no color is selected", () => {
+    // given / when
+    render(
+      <Actions
+        colors={colors} storages={storages}
+        selectedColor={null} selectedStorage={10}
+        onColorSelect={() => {}} onStorageSelect={() => {}} onAddToCart={() => {}}
+      />
+    );
+
+    // then
+    expect(screen.getByText("Añadir al carrito")).toBeDisabled();
+  });
+
+  it("disables the add button when no storage is selected", () => {
+    // given / when
+    render(
+      <Actions
+        colors={colors} storages={storages}
+        selectedColor={1} selectedStorage={null}
+        onColorSelect={() => {}} onStorageSelect={() => {}} onAddToCart={() => {}}
+      />
+    );
+
+    // then
+    expect(screen.getByText("Añadir al carrito")).toBeDisabled();
+  });
+
+  it("enables the add button when both color and storage are selected", () => {
+    // given / when
+    render(
+      <Actions
+        colors={colors} storages={storages}
+        selectedColor={1} selectedStorage={10}
+        onColorSelect={() => {}} onStorageSelect={() => {}} onAddToCart={() => {}}
+      />
+    );
+
+    // then
+    expect(screen.getByText("Añadir al carrito")).toBeEnabled();
+  });
 });

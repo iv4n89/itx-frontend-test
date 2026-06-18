@@ -51,9 +51,10 @@ describe("CartProvider", () => {
     expect(screen.getByTestId("count").textContent).toBe("3");
   });
 
-  it("persists cartCount to localStorage when it changes", async () => {
+  it("increments cartCount by 1 when the backend confirms the add", async () => {
     // given
-    addToCartApi.mockResolvedValue({ count: 2 });
+    addToCartApi.mockResolvedValue({ count: 1 });
+    localStorage.setItem("cart-count", "2");
     render(<CartProvider><CartConsumer /></CartProvider>);
 
     // when
@@ -62,12 +63,13 @@ describe("CartProvider", () => {
     });
 
     // then
-    expect(localStorage.getItem("cart-count")).toBe("2");
+    expect(screen.getByTestId("count").textContent).toBe("3");
   });
 
-  it("updates cartCount after addToCart resolves", async () => {
+  it("persists the incremented cartCount to localStorage", async () => {
     // given
-    addToCartApi.mockResolvedValue({ count: 5 });
+    addToCartApi.mockResolvedValue({ count: 1 });
+    localStorage.setItem("cart-count", "2");
     render(<CartProvider><CartConsumer /></CartProvider>);
 
     // when
@@ -76,7 +78,21 @@ describe("CartProvider", () => {
     });
 
     // then
-    expect(screen.getByTestId("count").textContent).toBe("5");
+    expect(localStorage.getItem("cart-count")).toBe("3");
+  });
+
+  it("does not change cartCount when the backend returns no count", async () => {
+    // given
+    addToCartApi.mockResolvedValue({ count: 0 });
+    render(<CartProvider><CartConsumer /></CartProvider>);
+
+    // when
+    await act(async () => {
+      screen.getByRole("button").click();
+    });
+
+    // then
+    expect(screen.getByTestId("count").textContent).toBe("0");
   });
 
   it("calls the repository with the correct payload", async () => {

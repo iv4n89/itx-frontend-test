@@ -73,6 +73,23 @@ Feature: Product Details Page
     Then the "256GB" button has the selected style
     And the "128GB" button does not have the selected style
 
+  Scenario: Disable the add button when color is not selected
+    Given a product with multiple color options
+    And no color has been selected
+    When Actions renders
+    Then the "Añadir al carrito" button is disabled
+
+  Scenario: Disable the add button when storage is not selected
+    Given a product with multiple storage options
+    And no storage has been selected
+    When Actions renders
+    Then the "Añadir al carrito" button is disabled
+
+  Scenario: Enable the add button when both color and storage are selected
+    Given the user has selected a color and a storage
+    When Actions renders
+    Then the "Añadir al carrito" button is enabled
+
   Scenario: Add product to cart with selected color and storage
     Given the user has selected colorCode 2 and storageCode 1
     When the user clicks "Añadir al carrito"

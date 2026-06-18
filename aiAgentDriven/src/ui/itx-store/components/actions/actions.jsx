@@ -33,7 +33,11 @@ export function Actions({
           </button>
         ))}
       </div>
-      <button className="actions__add" onClick={onAddToCart}>
+      <button
+        className="actions__add"
+        onClick={onAddToCart}
+        disabled={selectedColor === null || selectedStorage === null}
+      >
         Añadir al carrito
       </button>
     </div>
