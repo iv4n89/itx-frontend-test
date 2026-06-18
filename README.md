@@ -1,20 +1,16 @@
 # ITX Frontend Test
 
-Este repositorio contiene la solución a la prueba técnica propuesta, cuyo enunciado puede encontrarse [aquí](./ITX-FrontEndTest1.pdf).
+Este repositorio contiene dos soluciones independientes a la prueba técnica propuesta, cuyo enunciado puede encontrarse [aquí](./ITX-FrontEndTest1.pdf).
 
-## Tecnologías
+---
 
-| Herramienta | Versión | Rol |
-|---|---|---|
-| React | 19 | UI |
-| Vite | 8 | Bundler y dev server |
-| React Router | 7 | Navegación SPA |
-| TanStack Query | 5 | Fetching y caché de datos |
-| Vitest | 4 | Tests unitarios |
-| Testing Library | 16 | Utilidades de tests de componentes |
-| pnpm | 11 | Gestor de paquetes |
+## Solución 1 — Desarrollo manual
 
-## Decisiones técnicas
+Carpeta raíz del repositorio. SPA desarrollada íntegramente por el candidato siguiendo los requerimientos del enunciado.
+
+**Stack:** React 19 · Vite 8 · React Router 7 · TanStack Query 5 · Vitest 4 · Testing Library 16 · pnpm 11
+
+### Decisiones técnicas
 
 **Arquitectura en capas**
 
@@ -41,71 +37,38 @@ Estado global simple con `CartProvider`. Persiste en `localStorage` para sobrevi
 
 Todos los tests siguen el patrón GWT con comentarios explícitos. Se testean hooks, lógica de negocio, componentes y vistas con mocks de las dependencias externas.
 
-## Por qué pnpm en lugar de npm
+### Por qué pnpm en lugar de npm
 
 pnpm no ejecuta scripts `preinstall` y `postinstall` de dependencias transitivas por defecto, a diferencia de npm. Tras los recientes ataques a paquetes npm que usaban estos scripts para exfiltrar credenciales o instalar código malicioso en el momento de la instalación, pnpm ofrece una superficie de ataque significativamente menor. Además, su modelo de almacenamiento con enlaces simbólicos evita el acceso accidental a paquetes no declarados como dependencias directas.
 
-## Inicio rápido
+### Inicio rápido
 
-### Configuración del entorno
-
-Copia el fichero de variables de entorno:
+**Configuración del entorno:**
 
 ```bash
 cp .env.example .env
 ```
 
-El único valor configurable es la URL de la API:
-
 ```
 VITE_API_BASE_URL=https://itx-frontend-test.onrender.com
 ```
 
----
-
-### En local
-
-**Requisitos:** Node.js 22+ y pnpm 11+.
+**En local** (Node.js 22+ y pnpm 11+):
 
 ```bash
 pnpm install
-pnpm start
+pnpm start        # http://localhost:5173
 ```
 
-La aplicación estará disponible en `http://localhost:5173`.
-
----
-
-### En Docker
-
-**Con Makefile:**
+**En Docker:**
 
 ```bash
-# Construir imagen y levantar contenedor en http://localhost:3000
-make start
-
-# Parar y eliminar el contenedor
+make start        # http://localhost:3000
 make stop
-
-# Eliminar contenedor e imagen
 make clean
 ```
 
-**Sin Makefile:**
-
-```bash
-# Build
-docker build -t itx-frontend-test .
-
-# Run
-docker run -d -p 3000:80 --name itx-frontend-test-app itx-frontend-test
-```
-
-La aplicación estará disponible en `http://localhost:3000`.
-
----
-
-## Comandos disponibles
+### Comandos disponibles
 
 | Comando | Descripción |
 |---|---|
@@ -119,7 +82,7 @@ La aplicación estará disponible en `http://localhost:3000`.
 | `make stop` | Para y elimina el contenedor |
 | `make clean` | Elimina contenedor e imagen |
 
-## Testing
+### Testing
 
 Los tests cubren:
 
@@ -132,9 +95,48 @@ Los tests cubren:
 - **Vistas:** `HomePage` y `DetailsPage`
 
 ```bash
-# Ejecutar todos los tests
 pnpm test
+make test   # dentro de Docker
+```
 
-# Ejecutar tests en Docker
-make test
+---
+
+## Solución 2 — AI Agent Driven
+
+Carpeta [`aiAgentDriven/`](./aiAgentDriven/). La misma SPA, desarrollada íntegramente mediante una cuadrilla de agentes de IA orquestados por Claude Code.
+
+### Motivación
+
+El objetivo de esta segunda solución no es repetir el ejercicio, sino demostrar un flujo de trabajo agentic controlado y auditable: cómo delegar la implementación a agentes especializados manteniendo trazabilidad, calidad y criterio técnico.
+
+### Cómo funciona
+
+El proceso se gobierna con tres tipos de artefactos que viven en el repositorio:
+
+**Ficheros de memoria** (`.claude/rules/`, `CLAUDE.md`): definen el stack, la arquitectura, las convenciones de código, la estrategia de testing y el workflow de validación. Los agentes los leen al inicio de cada tarea para alinearse con las decisiones ya tomadas.
+
+**Especificaciones Gherkin** (`.claude/specs/*.feature`): cada hito tiene su propio fichero de escenarios en lenguaje natural. Actúan como contrato entre lo que se pide y lo que se implementa, sin necesidad de ejecutarlos como tests automatizados.
+
+**Plan de implementación** (`plan.md`): divide el desarrollo en 6 hitos secuenciales con tareas, agentes responsables y checklist de validación. Ningún hito avanza sin pasar lint y tests.
+
+### Cuadrilla de agentes
+
+| Agente | Rol |
+|---|---|
+| Architect | Define estructura, patrones y decisiones técnicas |
+| Frontend Developer | Implementa core y componentes |
+| Designer | Aplica estilos y maquetación |
+| Tester | Escribe y ejecuta tests unitarios |
+| Auditor | Revisa calidad, lint y cobertura |
+| Validator | Valida el resultado funcional antes de cerrar el hito |
+
+### Inicio rápido
+
+```bash
+cd aiAgentDriven
+cp .env.example .env   # VITE_API_BASE_URL=https://itx-frontend-test.onrender.com
+pnpm install
+pnpm start             # http://localhost:5173
+pnpm test
+pnpm lint
 ```

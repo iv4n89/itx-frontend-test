@@ -2,8 +2,6 @@
 
 Este repositorio contiene la solución a la prueba técnica propuesta, cuyo enunciado puede encontrarse [aquí](./ITX-FrontEndTest1.pdf).
 
-Consiste en una mini-aplicación SPA para comprar dispositivos móviles, con listado de productos, búsqueda en tiempo real, detalle de producto y gestión de carrito persistido en cliente.
-
 Esta solución ha sido desarrollada íntegramente mediante agentes de IA (Claude Code), siguiendo un flujo de trabajo estructurado con especificaciones en formato Gherkin, plan de hitos y roles de agente diferenciados.
 
 ## Tecnologías
