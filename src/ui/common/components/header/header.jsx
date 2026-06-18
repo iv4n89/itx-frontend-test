@@ -2,8 +2,11 @@ import { Link } from "react-router";
 import "./header.css";
 import { BreadCrumb } from "../breadcrumb/breadcrumb";
 import { CartIcon } from "../cart-icon/cart-icon";
+import { useCart } from "../../context/cart-context/use-cart-context";
 
 export const Header = () => {
+  const { itemCount } = useCart();
+
   return (
     <header className="header__container">
       <div className="header__content">
@@ -14,7 +17,7 @@ export const Header = () => {
           <BreadCrumb />
         </div>
         <div className="header__right">
-          <CartIcon />
+          <CartIcon itemCount={itemCount} />
         </div>
       </div>
     </header>
